@@ -1,8 +1,10 @@
 name: CI/CD Pipeline
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,4 +41,3 @@ jobs:
       - name: Deploy to AWS
         run: |
           aws ecs update-service --cluster bingo-cluster --service backend --force-new-deployment --region ap-southeast-1
-
