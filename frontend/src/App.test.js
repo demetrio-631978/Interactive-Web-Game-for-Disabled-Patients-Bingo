@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-// Update the test to check for Bingo Game title instead of "learn react"
+// Test to check for Bingo Game title
 test('renders Bingo Game title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Bingo Game/i);  // Check for Bingo Game title
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/Bingo Game/i);  // Check for Bingo Game title
+  expect(titleElement).toBeInTheDocument();
 });
 
 // Additional test to verify players and bingo numbers are rendered
@@ -16,4 +16,5 @@ test('renders players and bingo numbers', () => {
   expect(playersTitle).toBeInTheDocument();
   expect(bingoNumbersTitle).toBeInTheDocument();
 });
+
 
