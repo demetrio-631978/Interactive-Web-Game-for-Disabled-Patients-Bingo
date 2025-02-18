@@ -1,0 +1,25 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Install Dependencies
+        run: |
+          cd backend && npm install
+          cd ../frontend && npm install
+      
+      - name: Run Tests
+        run: |
+          cd backend && npm test
+          cd ../frontend && npm test
+      
+      - name: Deploy to AWS
+        run: |
+          aws ecs update-service --cluster bingo-cluster --service backend --force-new-deployment
