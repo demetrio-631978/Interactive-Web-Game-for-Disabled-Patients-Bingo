@@ -35,8 +35,13 @@ jobs:
       - name: Set up AWS CLI
         run: |
           aws configure set region ap-southeast-1
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+
+      - name: Verify ECS Cluster and Service Existence
+        run: |
+          aws ecs describe-clusters --cluster bingo-cluster --region ap-southeast-1
+          aws ecs describe-services --cluster bingo-cluster --services backend --region ap-southeast-1
 
       - name: Deploy to AWS
         run: |
