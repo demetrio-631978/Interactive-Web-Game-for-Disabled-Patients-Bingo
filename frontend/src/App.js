@@ -8,9 +8,16 @@ function App() {
   const [bingoNumbers, setBingoNumbers] = useState([]);
 
   useEffect(() => {
+    // Set up the socket listeners
     socket.on("updatePlayers", players => setPlayers(players));
-    socket.on("newNumber", number => setBingoNumbers([...bingoNumbers, number]));
-  }, [bingoNumbers]);
+    socket.on("newNumber", number => setBingoNumbers(prevNumbers => [...prevNumbers, number]));
+
+    // Cleanup the socket connection when the component unmounts
+    return () => {
+      socket.off("updatePlayers");
+      socket.off("newNumber");
+    };
+  }, [bingoNumbers]); // bingoNumbers dependency to ensure the socket listener updates
 
   return (
     <div>
